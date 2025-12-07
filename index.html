@@ -1,486 +1,484 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-    <meta name="description" content="李志远 - 前端工程师 & 品牌设计师个人简历">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="李志远 - 个人简历">
+    <meta name="color-scheme" content="dark light">
     <title>李志远 | 个人简历</title>
     <style>
-        /* --- 核心变量与重置 --- */
+        /* --- CSS Reset & Variables --- */
         :root {
-            --primary: #0056b3; /* 深海蓝 */
-            --primary-light: #e7f1ff;
+            /* 默认：深色模式 (Dark Mode Default) */
+            --primary: #60a5fa;         /* 浅蓝色高亮 */
+            --primary-light: #1e3a8a;   /* 深蓝背景 */
+            --text-main: #f3f4f6;       /* 浅灰白字 */
+            --text-sec: #9ca3af;        /* 灰色副字 */
+            --bg-body: #111827;         /* 深色背景 */
+            --bg-card: #1f2937;         /* 卡片深灰 */
+            --border: #374151;          /* 深色边框 */
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            
+            --radius: 12px;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 浅色模式覆盖 (Light Mode Override) */
+        [data-theme="light"] {
+            --primary: #0056b3;
+            --primary-light: #e6f0fa;
             --text-main: #1f2937;
             --text-sec: #4b5563;
             --bg-body: #f9fafb;
             --bg-card: #ffffff;
             --border: #e5e7eb;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --radius: 12px;
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --trans: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
         }
 
-        /* 深色模式变量 */
-        [data-theme="dark"] {
-            --primary: #60a5fa;
-            --primary-light: rgba(96, 165, 250, 0.15);
-            --text-main: #f3f4f6;
-            --text-sec: #9ca3af;
-            --bg-body: #111827;
-            --bg-card: #1f2937;
-            --border: #374151;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; font-size: 16px; }
         body { font-family: var(--font-sans); background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
-        a { text-decoration: none; color: inherit; }
+        
+        /* --- Layout & Typography --- */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+        section { margin-bottom: 3rem; animation: fadeIn 0.6s ease-out; }
+        h1, h2, h3 { line-height: 1.2; font-weight: 700; }
+        h2 { font-size: 1.5rem; margin-bottom: 1.5rem; position: relative; padding-left: 1rem; }
+        h2::before { content: ''; position: absolute; left: 0; top: 0.2em; bottom: 0.2em; width: 4px; background: var(--primary); border-radius: 2px; }
+        p { margin-bottom: 0.5rem; color: var(--text-sec); }
+        a { color: var(--primary); text-decoration: none; transition: var(--transition); }
+        a:hover { text-decoration: underline; }
         ul { list-style: none; }
+
+        /* --- Components --- */
+        /* Nav */
+        .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(31, 41, 55, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.8rem 0; transition: background 0.3s; }
+        [data-theme="light"] .nav-bar { background: rgba(255, 255, 255, 0.85); }
         
-        /* --- 布局工具 --- */
-        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; width: 100%; }
-        .grid { display: grid; gap: 20px; }
-        .flex { display: flex; align-items: center; }
-        .flex-wrap { flex-wrap: wrap; }
-        .flex-col { flex-direction: column; }
-        .justify-between { justify-content: space-between; }
-        .justify-center { justify-content: center; }
-        .items-start { align-items: flex-start; }
-        .gap-2 { gap: 0.5rem; }
-        .gap-4 { gap: 1rem; }
-        .mt-2 { margin-top: 0.5rem; }
-        .mt-4 { margin-top: 1rem; }
-        .mt-8 { margin-top: 2rem; }
-        .text-sm { font-size: 0.875rem; }
-        .text-xs { font-size: 0.75rem; }
-        .font-bold { font-weight: 700; }
-        .text-primary { color: var(--primary); }
-        .text-sec { color: var(--text-sec); }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-weight: 700; font-size: 1.25rem; color: var(--text-main); }
+        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+        .btn-icon { background: none; border: none; cursor: pointer; color: var(--text-main); font-size: 1.2rem; padding: 0.5rem; border-radius: 50%; transition: var(--transition); }
+        .btn-icon:hover { background-color: var(--border); }
 
-        /* --- 组件 --- */
-        /* 导航栏 */
-        .nav { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid var(--border); display: flex; align-items: center; transition: background 0.3s; }
-        [data-theme="dark"] .nav { background: rgba(17, 24, 39, 0.8); }
-        .nav-content { width: 100%; display: flex; justify-content: space-between; align-items: center; }
-        .nav-logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; }
-        .nav-links button { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; color: var(--text-main); transition: var(--trans); margin-left: 8px; }
-        .nav-links button:hover { background: var(--primary-light); color: var(--primary); }
+        /* Hero */
+        .hero { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; padding-top: 2rem; }
+        .hero-text h1 { font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+        .hero-role { font-size: 1.25rem; color: var(--primary); font-weight: 500; margin-bottom: 1rem; display: block; }
+        .hero-contacts { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+        .chip { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bg-card); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.9rem; transition: var(--transition); cursor: pointer; color: var(--text-main); }
+        .chip:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow); }
         
-        /* 按钮 */
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: var(--trans); border: 1px solid transparent; font-size: 0.9rem; gap: 6px; }
-        .btn-primary { background: var(--primary); color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
-        .btn-outline { border-color: var(--border); color: var(--text-main); background: var(--bg-card); }
-        .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        /* Avatar */
+        .avatar-container { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; border: 4px solid var(--bg-card); box-shadow: var(--shadow-hover); position: relative; background: var(--primary-light); }
+        .avatar-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .avatar-img:hover { transform: scale(1.05); }
+        .avatar-placeholder { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 3rem; font-weight: bold; color: var(--primary); }
 
-        /* 卡片 */
-        .card { background: var(--bg-card); border-radius: var(--radius); padding: 24px; border: 1px solid var(--border); transition: var(--trans); position: relative; overflow: hidden; }
-        .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); }
+        /* Highlights */
+        .highlights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: var(--bg-card); padding: 1rem; border-radius: var(--radius); border: 1px solid var(--border); text-align: center; transition: var(--transition); }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--primary); }
+        .stat-val { display: block; font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 0.85rem; color: var(--text-sec); }
+
+        /* Tabs */
+        .tabs { margin-bottom: 1.5rem; }
+        .tab-nav { display: flex; overflow-x: auto; gap: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1.5rem; scrollbar-width: none; }
+        .tab-nav::-webkit-scrollbar { display: none; }
+        .tab-btn { background: none; border: none; padding: 0.5rem 1rem; font-size: 1rem; font-weight: 500; color: var(--text-sec); cursor: pointer; position: relative; white-space: nowrap; }
+        .tab-btn.active { color: var(--primary); }
+        .tab-btn.active::after { content: ''; position: absolute; bottom: -0.6rem; left: 0; width: 100%; height: 3px; background: var(--primary); border-radius: 3px 3px 0 0; }
+        .tab-content { display: none; animation: slideUp 0.3s ease-out; }
+        .tab-content.active { display: grid; gap: 1.5rem; }
+
+        /* Cards (Experience/Projects) */
+        .card { background: var(--bg-card); border-radius: var(--radius); padding: 1.5rem; border: 1px solid var(--border); transition: var(--transition); position: relative; overflow: hidden; }
+        .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem; }
+        .card-title { font-size: 1.15rem; font-weight: 700; color: var(--text-main); }
+        .card-meta { font-size: 0.9rem; color: var(--text-sec); background: var(--bg-body); padding: 0.2rem 0.6rem; border-radius: 4px; }
+        .card-desc li { margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--text-sec); position: relative; padding-left: 1.2rem; }
+        .card-desc li::before { content: '•'; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+        .tag { font-size: 0.8rem; padding: 0.2rem 0.6rem; background: var(--primary-light); color: var(--primary); border-radius: 4px; font-weight: 500; }
+
+        /* Skills */
+        .skills-grid { display: grid; gap: 1.5rem; }
+        .skill-category h3 { font-size: 1rem; margin-bottom: 0.8rem; color: var(--text-main); }
+        .skill-bar-container { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+        .skill-badge { background: var(--bg-card); border: 1px solid var(--border); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.9rem; color: var(--text-sec); display: flex; align-items: center; gap: 0.4rem; }
+        .skill-badge strong { color: var(--text-main); }
+
+        /* Education & Awards */
+        .timeline-item { position: relative; padding-left: 1.5rem; margin-bottom: 1.5rem; border-left: 2px solid var(--border); }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before { content: ''; position: absolute; left: -0.4rem; top: 0.3rem; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--primary); }
+        .timeline-title { font-weight: 600; font-size: 1.1rem; }
+        .timeline-time { font-size: 0.85rem; color: var(--text-sec); margin-bottom: 0.3rem; display: block; }
         
-        /* 徽章 */
-        .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: var(--primary-light); color: var(--primary); white-space: nowrap; }
-        .badge-outline { background: transparent; border: 1px solid var(--border); color: var(--text-sec); }
+        .awards-list li { margin-bottom: 0.5rem; font-size: 0.95rem; display: flex; gap: 0.5rem; }
 
-        /* 标签页 (Tabs) */
-        .tabs-header { display: flex; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 0; margin-bottom: 20px; overflow-x: auto; scrollbar-width: none; }
-        .tab-btn { padding: 10px 20px; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-sec); font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
-        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
-        .tab-panel { display: none; animation: fadeIn 0.4s ease; }
-        .tab-panel.active { display: block; }
+        /* Footer */
+        footer { text-align: center; padding: 2rem 0; color: var(--text-sec); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 3rem; }
 
-        /* 动画 */
+        /* Animations */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* 具体模块样式 */
-        .hero-section { padding-top: 100px; padding-bottom: 40px; }
-        
-        /* --- 修正后的头像部分 --- */
-        .avatar-container { 
-            width: 120px; 
-            height: 120px; 
-            border-radius: 50%; 
-            overflow: hidden; 
-            border: 4px solid var(--bg-card); 
-            box-shadow: var(--shadow); 
-            flex-shrink: 0; 
-            background: var(--primary-light); 
-            position: relative; /* 必须设置定位 */
-        }
-        /* 确保图片在最上层 */
-        .avatar-container img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transition: transform 0.5s; 
-            position: relative; /* 启用z-index */
-            z-index: 2; /* 层级高于SVG */
-            background-color: var(--bg-card); /* 避免透明图片透出底部 */
-        }
-        /* 假人模版在下层 */
-        .avatar-container svg { 
-            width: 60%; 
-            height: 60%; 
-            position: absolute; 
-            top: 20%; 
-            left: 20%; 
-            fill: var(--primary); 
-            opacity: 0.5; 
-            z-index: 1; 
-        }
-        .avatar-container:hover img { 
-            transform: scale(1.1); 
-        }
-        /* ----------------------- */
+        @keyframes slideUp { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 技能条 */
-        .skill-group h4 { margin-bottom: 8px; font-size: 0.9rem; color: var(--text-sec); }
-        .skill-list { display: flex; flex-wrap: wrap; gap: 8px; }
-
-        /* 时间线 (简化版) */
-        .timeline-item { position: relative; padding-left: 20px; border-left: 2px solid var(--border); padding-bottom: 20px; }
-        .timeline-item:last-child { border-left-color: transparent; }
-        .timeline-dot { position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid var(--bg-card); }
-
-        /* 图标 SVG 定义 */
-        .icon { width: 1.2em; height: 1.2em; fill: currentColor; vertical-align: middle; }
-
-        /* --- 响应式调整 --- */
-        @media (min-width: 768px) {
-            .hero-inner { flex-direction: row; text-align: left; }
-            .hero-info { margin-left: 30px; }
-            .grid-2 { grid-template-columns: repeat(2, 1fr); }
-            .grid-3 { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (max-width: 767px) {
-            .hero-inner { flex-direction: column; text-align: center; }
-            .hero-info { margin-top: 20px; align-items: center; }
-            .hero-actions { justify-content: center; }
-            .nav-logo { font-size: 1rem; }
+        /* --- Media Queries --- */
+        @media (max-width: 768px) {
+            .hero { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+            .hero-contacts { justify-content: center; }
+            .nav-logo { font-size: 1.1rem; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.3rem; }
         }
 
-        /* --- 打印样式 --- */
+        /* --- Print Styles (Always Light) --- */
         @media print {
-            .nav, .btn-print, .btn-theme, .hero-actions, footer { display: none !important; }
-            body { background: white; color: black; font-size: 12pt; }
+            .nav-bar, .no-print, .btn-icon { display: none !important; }
+            body, [data-theme="dark"] { 
+                background: #fff !important; 
+                color: #000 !important; 
+                font-size: 11pt; 
+                --bg-card: #fff;
+                --text-main: #000;
+                --text-sec: #333;
+                --border: #ccc;
+            }
             .container { max-width: 100%; padding: 0; }
-            .card { border: none; padding: 0; margin-bottom: 20px; box-shadow: none; break-inside: avoid; }
-            .badge { border: 1px solid #ccc; background: none; color: black; }
-            .tab-header { display: none; }
-            .tab-panel { display: block !important; margin-bottom: 20px; }
-            a[href^="http"]:after { content: " (" attr(href) ")"; font-size: 0.8em; color: #555; }
-            .avatar-container { width: 80px; height: 80px; border: none; }
-            h1, h2, h3 { color: black !important; page-break-after: avoid; }
+            section { margin-bottom: 1.5rem; break-inside: avoid; }
+            a { text-decoration: none; color: #000; }
+            .chip { border: none; padding: 0; background: none; color: #000; }
+            .card, .stat-card { border: none; box-shadow: none; padding: 0; margin-bottom: 1rem; color: #000; }
+            .tab-nav { display: none; }
+            .tab-content { display: block !important; }
+            .hero { display: flex; align-items: flex-start; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 1rem; margin-bottom: 1rem; }
+            .avatar-container { border: none; width: 100px; height: 100px; box-shadow: none; }
+            h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.3rem; margin-bottom: 1rem; }
+            h2::before { display: none; }
         }
-
-        /* --- 辅助类 --- */
-        .section-title { font-size: 1.5rem; margin-bottom: 1.5rem; position: relative; display: inline-block; }
-        .section-title::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 40%; height: 3px; background: var(--primary); border-radius: 2px; }
-        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <nav class="nav">
+    <nav class="nav-bar">
         <div class="container nav-content">
-            <a href="#" class="nav-logo" id="nav-name">Resume</a>
-            <div class="nav-links">
-                <button onclick="window.print()" title="打印简历" aria-label="打印">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+            <div class="nav-logo">Li Zhiyuan</div>
+            <div class="nav-actions">
+                <button class="btn-icon" id="theme-toggle" aria-label="切换主题">
+                    <span id="theme-icon">☀</span>
                 </button>
-                <button id="theme-toggle" title="切换主题" aria-label="切换主题">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+                <button class="btn-icon" onclick="window.print()" aria-label="打印简历">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                 </button>
             </div>
         </div>
     </nav>
 
     <main class="container">
-        
-        <section class="hero-section" id="hero"></section>
-
-        <section class="mt-8">
-            <h2 class="section-title">核心亮点</h2>
-            <div class="grid grid-3 mt-4" id="highlights"></div>
-        </section>
-
-        <section class="mt-8">
-            <h2 class="section-title">专业技能</h2>
-            <div class="card mt-4">
-                <div class="grid grid-2" id="skills"></div>
+        <section class="hero" id="hero">
+            <div class="hero-text">
+                <h1 id="name"></h1>
+                <span class="hero-role">AI Developer & Engineering Student</span>
+                <p id="bio">跨领域学习者 | 21项AI认证 | 1年高强度自学与实战</p>
+                <div class="hero-contacts" id="contact-list">
+                    </div>
+            </div>
+            <div class="avatar-container">
+                <img src="photo1.jpg" alt="李志远" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="avatar-placeholder" style="display:none">李</div>
             </div>
         </section>
 
-        <section class="mt-8">
-            <div class="tabs-header" role="tablist">
-                <button class="tab-btn active" onclick="switchTab('projects')" role="tab">重点项目</button>
-                <button class="tab-btn" onclick="switchTab('experience')" role="tab">学生工作 & 领导力</button>
-                <button class="tab-btn" onclick="switchTab('education')" role="tab">教育 & 证书</button>
-            </div>
-
-            <div id="projects" class="tab-panel active" role="tabpanel">
-                <div class="grid grid-2" id="projects-list"></div>
-            </div>
-
-            <div id="experience" class="tab-panel" role="tabpanel">
-                <div class="card" id="experience-list"></div>
-            </div>
-
-            <div id="education" class="tab-panel" role="tabpanel">
-                <div class="grid grid-2" id="education-list"></div>
+        <section id="highlights">
+            <div class="highlights-grid">
+                <div class="stat-card">
+                    <span class="stat-val">21+</span>
+                    <span class="stat-label">AI 技术认证</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-val">60%</span>
+                    <span class="stat-label">流程效率提升</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-val">100w+</span>
+                    <span class="stat-label">知识库数据处理</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-val">50+</span>
+                    <span class="stat-label">原创技术文章</span>
+                </div>
             </div>
         </section>
 
+        <section id="experience">
+            <h2>实战与经历</h2>
+            
+            <div class="tabs">
+                <div class="tab-nav" role="tablist" aria-label="经历分类">
+                    <button class="tab-btn active" onclick="switchTab('exp', 'projects')" role="tab" aria-selected="true">项目经历</button>
+                    <button class="tab-btn" onclick="switchTab('exp', 'leadership')" role="tab" aria-selected="false">学生工作</button>
+                    <button class="tab-btn" onclick="switchTab('exp', 'media')" role="tab" aria-selected="false">自媒体运营</button>
+                </div>
+
+                <div id="projects" class="tab-content active" role="tabpanel">
+                    </div>
+
+                <div id="leadership" class="tab-content" role="tabpanel">
+                    </div>
+
+                <div id="media" class="tab-content" role="tabpanel">
+                     </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>专业技能</h2>
+            <div class="skills-grid" id="skills-container">
+                </div>
+        </section>
+
+        <section id="edu-awards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div>
+                <h2>教育背景</h2>
+                <div id="education-list">
+                    </div>
+            </div>
+            <div>
+                <h2>获奖与证书</h2>
+                <ul class="awards-list" id="awards-list">
+                    </ul>
+            </div>
+        </section>
     </main>
 
-    <footer class="container" style="text-align: center; padding: 40px 0; color: var(--text-sec); font-size: 0.875rem;">
-        <p>© <span id="year"></span> <span id="footer-name"></span>. Designed & Developed by Li Zhiyuan.</p>
+    <footer>
+        <p>&copy; 2024 李志远. Built with Vanilla JS & CSS. <br><span style="font-size:0.8em; opacity:0.7">Last updated: Oct 2024</span></p>
     </footer>
 
     <script>
-        // --- 1. 数据定义 (Resume Data) ---
+        // --- 1. Data Store (Easy to Edit) ---
         const resume = {
-            basic: {
+            basics: {
                 name: "李志远",
-                role: "人工智能学习者 / 船舶电气专业学生",
                 phone: "18035435842",
                 email: "3615207640@qq.com",
-                summary: "具备极强自主学习能力的跨界探索者。一年内自学掌握全栈AI技能并考取21项认证，致力于将人工智能技术应用于船舶电气与数据管理领域。擅长资源整合与自动化工具开发，实战经验丰富。",
-                photo: "photo1.jpg"
+                location: "中国",
             },
-            highlights: [
-                { num: "21项", text: "12个月内考取AI与云技术专业认证" },
-                { num: "100万+", text: "个人知识库处理技术文档字数" },
-                { num: "40%", text: "通过自动化脚本提升部门工作效率" }
+            education: [
+                { school: "介休市第一中学校", level: "高中", date: "毕业时间待补" },
+                { school: "介休市第三中学校", level: "初中", date: "" },
+                { school: "介休市北坛小学", level: "小学", date: "" }
             ],
             skills: {
-                "人工智能 & 数据": ["TensorFlow/PyTorch", "NLP", "Agent智能体搭建", "数据分析", "模型调优"],
-                "编程 & 开发": ["Python (熟练)", "SQL", "Git", "Linux", "Arduino/RPi"],
-                "电气工程": ["电路原理", "船舶电气系统", "CAD制图", "PLC自动化"],
-                "通用能力": ["极速自学", "项目管理", "技术写作", "跨学科整合"]
+                "AI与数据": ["TensorFlow/PyTorch", "NLP", "Agent智能体", "数据可视化", "模型调优"],
+                "编程开发": ["Python (熟练)", "SQL", "Git", "Linux", "Arduino/RPi"],
+                "电气工程": ["电路原理", "船舶电气", "CAD制图", "PLC"],
+                "通用能力": ["极速学习力", "项目管理", "技术写作", "跨领域整合"]
             },
-            experience: [
+            projects: [
                 {
-                    role: "学习部副部长",
-                    org: "轮机工程学院 | 团总支学生会",
-                    time: "2024.09 - 至今",
+                    name: "个人AI成长知识库 (Gnosis-Base)",
+                    role: "独立开发者",
+                    date: "2024.03 - 至今",
+                    tags: ["NLP", "Agent", "Python"],
                     desc: [
-                        "主导“AI赋能专业学习”系列分享会，建立线上知识库，激发同学跨界兴趣。",
-                        "引入自动化脚本处理统计数据，部门常规事务效率提升 40%。",
-                        "协助开展学风建设及竞赛动员，组织多场专业辅导活动。"
+                        "独立设计基于Agent的个人知识管理系统，整合AI、电气、心理学等多领域笔记。",
+                        "运用NLP实现智能问答，知识检索效率提升约60%。",
+                        "构建自动化抓取流程，处理超100万字技术文档。",
+                        "计划开源，目前已完成原型验证。"
+                    ]
+                },
+                {
+                    name: "AI技术攻坚项目 (休学自学)",
+                    role: "主导者",
+                    date: "2023.09 - 2024.08",
+                    tags: ["全栈AI", "仿真模型"],
+                    desc: [
+                        "执行为期一年的高强度自学计划，系统掌握AI编程至智能体搭建。",
+                        "主导开发“基于NLP的故障诊断助手”及“船舶电气仿真模型”。",
+                        "12个月内高效考取21项专业证书（阿里云/AWS/百度云等）。"
+                    ]
+                },
+                {
+                     name: "个人公众号 (成长/阅读)",
+                    role: "主理人",
+                    date: "2023.10 - 2024.07",
+                    tags: ["内容运营", "新媒体"],
+                    desc: [
+                        "独立运营个人成长类公众号，累计发表原创文章50+篇。",
+                        "坚持每周输出高质量技术随笔与读书笔记。",
+                        "多篇文章被转载，吸引大量垂类粉丝。"
                     ]
                 }
             ],
-            projects: [
+            leadership: [
                 {
-                    name: "Gnosis-Base 个人AI成长知识库",
-                    tag: "全栈开发 / NLP",
-                    time: "2024.03 - 至今",
-                    desc: "独立开发的基于Agent的知识管理系统。利用NLP技术实现笔记智能问答，检索效率提升60%。已处理超100万字文档，计划毕业后开源。",
-                    link: "#"
-                },
-                {
-                    name: "AI技术攻坚 (休学期自学)",
-                    tag: "自主学习 / 仿真",
-                    time: "2023.09 - 2024.08",
-                    desc: "执行为期一年的高强度自学计划。主导开发“故障诊断助手”及“船舶电气仿真模型”。一年内考取阿里云、AWS、NVIDIA等21项认证。",
-                    link: "#"
-                },
-                {
-                    name: "个人成长公众号",
-                    tag: "内容运营",
-                    time: "2023.10 - 至今",
-                    desc: "专注于深度阅读与成长分享。坚持输出50+篇原创技术随笔与笔记，构建垂直领域读者社群。",
-                    link: "#"
+                    name: "轮机工程学院 - 团总支学生会",
+                    role: "学习部副部长",
+                    date: "2024.09 - 至今",
+                    desc: [
+                        "主导“AI赋能专业学习”分享会，激发同学跨界兴趣。",
+                        "搭建学院“线上学习资源知识库”，整合笔记与竞赛资料。",
+                        "引入自动化脚本处理数据，部门事务效率提升40%。",
+                        "协助开展学风建设及四六级辅导活动。"
+                    ]
                 }
             ],
-            education: [
-                { school: "介休市第一中学校", degree: "高中", time: "毕业年份待补" },
-                { school: "介休市第三中学校", degree: "初中", time: "毕业年份待补" },
-                { school: "介休市北坛小学", degree: "小学", time: "毕业年份待补" }
-            ],
+            media: [], // Merged into projects or keep empty if needed separatly, adjusted in logic above
             awards: [
-                "【一等奖】校级“海员大比武”技能竞赛 (2025)",
-                "【校级一等奖学金】 (2024-2025学年)",
-                "【待补】奖 “挑战杯”全国大学生课外学术科技作品竞赛",
                 "阿里云人工智能工程师 (ACP)",
+                "百度云AI工程师认证",
                 "AWS Certified Cloud Practitioner",
-                "NVIDIA DLI 深度学习基础认证"
+                "NVIDIA DLI 深度学习基础认证",
+                "校级一等奖学金 (2025-2026学年)",
+                "【待补】中国国际大学生创新大赛",
+                "【待补】“挑战杯”课外学术科技竞赛",
+                "【待补】“海员大比武”技能竞赛 (2025)"
             ]
         };
 
-        // --- 2. 渲染逻辑 (Render Logic) ---
-        
-        // 渲染 Hero
-        function renderHero() {
-            const { name, role, summary, email, phone, photo } = resume.basic;
-            document.getElementById('nav-name').textContent = name;
-            document.getElementById('footer-name').textContent = name;
-            document.getElementById('year').textContent = new Date().getFullYear();
+        // --- 2. Render Functions ---
 
-            const heroHTML = `
-                <div class="flex hero-inner">
-                    <div class="avatar-container">
-                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                        <img src="${photo}" alt="${name}" onerror="this.style.display='none'">
+        function renderHero() {
+            document.getElementById('name').textContent = resume.basics.name;
+            const contactHTML = `
+                <a href="tel:${resume.basics.phone}" class="chip">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    ${resume.basics.phone}
+                </a>
+                <a href="mailto:${resume.basics.email}" class="chip">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    ${resume.basics.email}
+                </a>
+            `;
+            document.getElementById('contact-list').innerHTML = contactHTML;
+        }
+
+        function createCard(item, showTags = false) {
+            const tagsHtml = showTags && item.tags ? `<div class="tags">${item.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : '';
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">${item.name}</div>
+                        <div class="card-meta">${item.date} | ${item.role}</div>
                     </div>
-                    <div class="hero-info flex flex-col items-start">
-                        <h1 class="font-bold" style="font-size: 2rem; margin-bottom: 0.5rem;">${name}</h1>
-                        <p class="text-primary font-bold" style="margin-bottom: 1rem;">${role}</p>
-                        <p class="text-sec" style="margin-bottom: 1.5rem; max-width: 600px;">${summary}</p>
-                        <div class="hero-actions flex gap-4 flex-wrap">
-                            <a href="mailto:${email}" class="btn btn-primary">
-                                <svg class="icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                                联系我
-                            </a>
-                            <a href="tel:${phone}" class="btn btn-outline">
-                                <svg class="icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 1.25 0 2.45.19 3.57.57.35.11.74.03 1.02-.24l2.2-2.2z"/></svg>
-                                ${phone}
-                            </a>
-                        </div>
-                    </div>
+                    <ul class="card-desc">
+                        ${item.desc.map(d => `<li>${d}</li>`).join('')}
+                    </ul>
+                    ${tagsHtml}
                 </div>
             `;
-            document.getElementById('hero').innerHTML = heroHTML;
         }
 
-        // 渲染亮点
-        function renderHighlights() {
-            const html = resume.highlights.map(h => `
-                <div class="card flex flex-col items-start justify-center" style="padding: 20px;">
-                    <span class="text-primary font-bold" style="font-size: 1.5rem;">${h.num}</span>
-                    <span class="text-sec text-sm mt-2">${h.text}</span>
-                </div>
-            `).join('');
-            document.getElementById('highlights').innerHTML = html;
+        function renderExperience() {
+            document.getElementById('projects').innerHTML = resume.projects.map(p => createCard(p, true)).join('');
+            document.getElementById('leadership').innerHTML = resume.leadership.map(l => createCard(l)).join('');
+            // Note: Media items in resume object above were merged conceptually or can be rendered here if array is populated.
+            // Using placeholder logic for now if media array is empty in data.
+            if(resume.media && resume.media.length > 0) {
+                 document.getElementById('media').innerHTML = resume.media.map(m => createCard(m)).join('');
+            } else {
+                 document.getElementById('media').innerHTML = `<p style="padding:1rem; text-align:center;">暂无内容，请在代码中配置。</p>`;
+            }
         }
 
-        // 渲染技能
         function renderSkills() {
+            const container = document.getElementById('skills-container');
             let html = '';
-            for (const [category, items] of Object.entries(resume.skills)) {
+            for (const [category, skills] of Object.entries(resume.skills)) {
                 html += `
-                    <div class="skill-group">
-                        <h4>${category}</h4>
-                        <div class="skill-list">
-                            ${items.map(skill => `<span class="badge">${skill}</span>`).join('')}
+                    <div class="skill-category">
+                        <h3>${category}</h3>
+                        <div class="skill-bar-container">
+                            ${skills.map(s => `<div class="skill-badge"><span>${s}</span></div>`).join('')}
                         </div>
                     </div>
                 `;
             }
-            document.getElementById('skills').innerHTML = html;
+            container.innerHTML = html;
         }
 
-        // 渲染经历
-        function renderExperience() {
-            const html = resume.experience.map((exp, index) => `
+        function renderEduAwards() {
+            // Education
+            const eduHtml = resume.education.map(e => `
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="flex justify-between flex-wrap">
-                        <h3 class="font-bold text-primary">${exp.role}</h3>
-                        <span class="badge badge-outline text-xs">${exp.time}</span>
-                    </div>
-                    <div class="font-bold text-sm mt-2" style="color: var(--text-main);">${exp.org}</div>
-                    <ul class="mt-2 text-sec text-sm" style="list-style: disc; padding-left: 1.2rem;">
-                        ${exp.desc.map(d => `<li>${d}</li>`).join('')}
-                    </ul>
+                    <span class="timeline-title">${e.school}</span>
+                    <span class="timeline-time">${e.level} ${e.date ? ' | ' + e.date : ''}</span>
                 </div>
             `).join('');
-            document.getElementById('experience-list').innerHTML = html;
-        }
+            document.getElementById('education-list').innerHTML = eduHtml;
 
-        // 渲染项目
-        function renderProjects() {
-            const html = resume.projects.map(p => `
-                <div class="card flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start">
-                            <h3 class="font-bold">${p.name}</h3>
-                        </div>
-                        <div class="mt-2 flex gap-2">
-                             <span class="badge badge-outline">${p.tag}</span>
-                        </div>
-                        <p class="text-sec text-sm mt-4">${p.desc}</p>
-                    </div>
-                    <div class="mt-4 pt-4" style="border-top: 1px solid var(--border);">
-                        <span class="text-xs text-sec">${p.time}</span>
-                    </div>
-                </div>
+            // Awards
+            const awHtml = resume.awards.map(a => `
+                <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="min-width:18px; margin-top:2px"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                    <span>${a}</span>
+                </li>
             `).join('');
-            document.getElementById('projects-list').innerHTML = html;
+            document.getElementById('awards-list').innerHTML = awHtml;
         }
 
-        // 渲染教育与证书
-        function renderEducation() {
-            // 教育
-            let eduHTML = `<div class="card">
-                <h3 class="font-bold mb-4" style="margin-bottom:1rem">教育背景</h3>
-                ${resume.education.map(e => `
-                    <div class="flex justify-between items-center" style="margin-bottom: 12px; border-bottom: 1px dashed var(--border); padding-bottom: 8px;">
-                        <div>
-                            <div class="font-bold text-sm">${e.school}</div>
-                            <div class="text-xs text-sec">${e.degree}</div>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>`;
+        // --- 3. Interaction Functions ---
 
-            // 证书与奖项
-            let awardHTML = `<div class="card">
-                <h3 class="font-bold mb-4" style="margin-bottom:1rem">证书与奖项</h3>
-                <ul style="list-style: none;">
-                    ${resume.awards.map(a => `
-                        <li class="flex items-start gap-2 mb-2 text-sm text-sec">
-                            <svg class="icon text-primary" style="flex-shrink:0; width:16px;" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                            <span>${a}</span>
-                        </li>
-                    `).join('')}
-                </ul>
-            </div>`;
-
-            document.getElementById('education-list').innerHTML = eduHTML + awardHTML;
+        function switchTab(group, targetId) {
+            const buttons = document.querySelectorAll(`.tab-nav button`);
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            });
+            const contents = document.querySelectorAll(`.tab-content`);
+            contents.forEach(c => c.classList.remove('active'));
+            document.getElementById(targetId).classList.add('active');
+            const clickedBtn = event.currentTarget;
+            clickedBtn.classList.add('active');
+            clickedBtn.setAttribute('aria-selected', 'true');
         }
 
-        // --- 3. 交互逻辑 (Interactions) ---
-
-        // 标签页切换
-        function switchTab(tabId) {
-            // 按钮状态
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // 内容显示
-            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-        }
-
-        // 主题切换
+        // Theme Toggle
         const themeBtn = document.getElementById('theme-toggle');
-        const html = document.documentElement;
+        const themeIcon = document.getElementById('theme-icon');
         
-        // 初始化主题 (检查系统偏好)
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            html.setAttribute('data-theme', 'dark');
+        // Function: Switch CSS
+        function applyTheme(isLight) {
+            // If isLight is true, add data-theme="light", else remove it (fallback to root which is dark)
+            if (isLight) {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.textContent = '◑';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.textContent = '☀';
+            }
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
         }
 
         themeBtn.addEventListener('click', () => {
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.setAttribute('data-theme', 'light');
-            } else {
-                html.setAttribute('data-theme', 'dark');
-            }
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const isLightNow = currentTheme === 'light';
+            // If currently light, switch to dark (false). If currently dark (null), switch to light (true).
+            applyTheme(!isLightNow);
         });
 
-        // --- 4. 初始化 ---
-        window.addEventListener('DOMContentLoaded', () => {
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
             renderHero();
-            renderHighlights();
-            renderSkills();
             renderExperience();
-            renderProjects();
-            renderEducation();
+            renderSkills();
+            renderEduAwards();
+
+            // Logic: Default to Dark. Only switch to light if explicitly saved as 'light'.
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                applyTheme(true);
+            } else {
+                // Default to dark (which is the default CSS, so we just ensure icon is correct)
+                applyTheme(false);
+            }
         });
 
     </script>
